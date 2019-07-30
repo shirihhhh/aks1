@@ -9,9 +9,9 @@ jobs:
 
     - uses: actions/checkout@master
 
-    - uses: azure/k8s-actions/docker-login@login
+    - uses: azure/k8s-actions/docker-login@master
       with:
-        loginServer: demoe2e.azurecr.io
+        login-server: demoe2e.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     
@@ -22,9 +22,9 @@ jobs:
     - uses: azure/k8s-actions/aks-set-context@master
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
-        subscriptionId: c00d16c7-6c1f-4c03-9be1-6934a4c49682
-        clusterName: desattir
-        resourceGroupName: desattir
+        subscription-id: c00d16c7-6c1f-4c03-9be1-6934a4c49682
+        cluster-name: desattir
+        resource-group: desattir
       id: login
 
     - uses: azure/k8s-actions/k8s-set-secret@master
@@ -35,7 +35,7 @@ jobs:
         secret-name: demo-e2e-secret
       id: set-secret
 
-    - uses: azure/k8s-actions/k8s-deploy@login
+    - uses: azure/k8s-actions/k8s-deploy@master
       with:
         manifests: |
           manifests/deployment.yml
