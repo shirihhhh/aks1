@@ -22,7 +22,6 @@ jobs:
     - uses: azure/k8s-actions/aks-set-context@master
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
-        subscription-id: c00d16c7-6c1f-4c03-9be1-6934a4c49682
         cluster-name: desattir
         resource-group: desattir
       id: login
