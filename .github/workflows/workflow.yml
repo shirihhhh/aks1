@@ -18,7 +18,8 @@ jobs:
     - run: |
         docker build . -t demoe2e.azurecr.io/aksdemo:${{ github.sha }}
         docker push demoe2e.azurecr.io/aksdemo:${{ github.sha }} 
-  
+        
+        
   deploy: 
     name: Deploy
     runs-on: ubuntu-latest
