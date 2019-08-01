@@ -2,8 +2,8 @@ on: [push]
 
 jobs:
 
-  run:
-    name: Run
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
 
@@ -18,7 +18,14 @@ jobs:
     - run: |
         docker build . -t demoe2e.azurecr.io/aksdemo:${{ github.sha }}
         docker push demoe2e.azurecr.io/aksdemo:${{ github.sha }} 
-      
+  
+  deploy: 
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    
+    - uses actions/checkout@master
+    
     - uses: azure/k8s-actions/aks-set-context@master
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
