@@ -1,4 +1,4 @@
-# Sample NodeJS application for GitHub Actions
+# Deploy NodeJs App to Azure Kubernetes service cluster by using GitHub actions
 Sample workflow which uses GitHub actions to build and deploy a NodeJS app to a **Azure Kubernetes Service (AKS)** cluster
 
 ## End to end workflow for building container images and deploying to an AKS cluster
@@ -12,14 +12,14 @@ jobs:
     steps:
     - uses: actions/checkout@master
     
-    # Connect to a container registry
+    # Connect to Azure Container registry (ACR)
     - uses: azure/k8s-actions/docker-login@master
       with:
         login-server: demo.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }} 
         password: ${{ secrets.REGISTRY_PASSWORD }}
     
-    # Docker build and push to a container registry
+    # Docker build and push to a Azure Container registry (ACR)
     - run: |
         docker build . -t demo.azurecr.io/k8sdemo:${{ github.sha }}
         docker push demo.azurecr.io/k8sdemo:${{ github.sha }}
@@ -31,7 +31,7 @@ jobs:
         cluster-name: desattir
         resource-group: desattir
     
-    # Create imagepullsecret
+    # Create imagepullsecret for Azure Container registry (ACR)
     - uses: azure/k8s-actions/k8s-create-secret@master
       with:
         container-registry-url: demo.azurecr.io
