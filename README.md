@@ -93,7 +93,7 @@ jobs:
     ```
     
     ```yaml      
-      # Set the target Kubernetes cluster. 
+      # Set the target AKS cluster. 
     - uses: azure/k8s-actions/k8s-set-context@master
       with:
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
