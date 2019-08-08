@@ -13,7 +13,7 @@ jobs:
     - uses: actions/checkout@master
     
     # Connect to Azure Container registry (ACR)
-    - uses: azure/container-actions/docker-login@master
+    - uses: azure/k8s-actions/docker-login@master
       with:
         login-server: demo.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }} 
@@ -85,7 +85,7 @@ jobs:
     
     ```yaml      
       # Connect to a container registry
-    - uses: azure/container-actions/docker-login@master
+    - uses: azure/k8s-actions/docker-login@master
       with:
         login-server: demo.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }} 
