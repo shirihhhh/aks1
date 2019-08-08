@@ -9,7 +9,7 @@ jobs:
 
     - uses: actions/checkout@master
 
-    - uses: azure/k8s-actions/docker-login@master
+    - uses: azure/container-actions/docker-login@master
       with:
         login-server: demoe2e.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
