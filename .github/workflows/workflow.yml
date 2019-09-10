@@ -9,7 +9,7 @@ jobs:
 
     - uses: actions/checkout@master
 
-    - uses: azure/container-actions/docker-login@master
+    - uses: azure/docker-login@master
       with:
         login-server: demoe2e.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
@@ -19,20 +19,20 @@ jobs:
         docker build . -t demoe2e.azurecr.io/aksdemo:${{ github.sha }}
         docker push demoe2e.azurecr.io/aksdemo:${{ github.sha }} 
       
-    - uses: azure/k8s-actions/aks-set-context@master
+    - uses: azure/aks-set-context@master
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
-        cluster-name: desattir
-        resource-group: desattir
+        cluster-name: desattir-bg
+        resource-group: desattir-bg
 
-    - uses: azure/k8s-actions/k8s-create-secret@master
+    - uses: azure/k8s-create-secret@master
       with:
         container-registry-url: demoe2e.azurecr.io
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
         container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
         secret-name: demo-e2e-secret
 
-    - uses: azure/k8s-actions/k8s-deploy@master
+    - uses: azure/k8s-deploy@master
       with:
         manifests: |
           manifests/deployment.yml
