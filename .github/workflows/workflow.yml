@@ -18,7 +18,7 @@ jobs:
         docker build . -t rakolacr.azurecr.io/aksdemo:${{ github.sha }}
         docker push rakolacr.azurecr.io/aksdemo:${{ github.sha }} 
       
-    - uses: azure/aks-set-context@releases/v1
+    - uses: azure/aks-set-context@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
         cluster-name: desattir-bg
