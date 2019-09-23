@@ -10,13 +10,13 @@ jobs:
 
     - uses: azure/docker-login@master
       with:
-        login-server: demoe2e.azurecr.io
+        login-server: rakolacr.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     
     - run: |
-        docker build . -t demoe2e.azurecr.io/aksdemo:${{ github.sha }}
-        docker push demoe2e.azurecr.io/aksdemo:${{ github.sha }} 
+        docker build . -t rakolacr.azurecr.io/aksdemo:${{ github.sha }}
+        docker push rakolacr.azurecr.io/aksdemo:${{ github.sha }} 
       
     - uses: azure/aks-set-context@master
       with:
@@ -26,17 +26,9 @@ jobs:
 
     - uses: azure/k8s-create-secret@v1
       with:
-        container-registry-url: demoe2e.azurecr.io
+        container-registry-url: rakolacr.azurecr.io
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
         container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
         secret-name: demo-e2e-secret
 
-    - uses: Azure/k8s-deploy@v1
-      with:
-        manifests: |
-          manifests/deployment.yml
-          manifests/service.yml
-        images: |
-          demoe2e.azurecr.io/aksdemo:${{ github.sha }}
-        imagepullsecrets: |
-          demo-e2e-secret
+   
