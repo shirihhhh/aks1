@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
 
-    - uses: azure/docker-login@master
+    - uses: azure/docker-login@v1
       with:
         login-server: rakolacr.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
@@ -18,7 +18,7 @@ jobs:
         docker build . -t rakolacr.azurecr.io/aksdemo:${{ github.sha }}
         docker push rakolacr.azurecr.io/aksdemo:${{ github.sha }} 
       
-    - uses: azure/aks-set-context@master
+    - uses: azure/aks-set-context@releases/v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
         cluster-name: desattir-bg
