@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: aksdemo 
-          image: demoe2e.azurecr.io/aksdemo 
+          image: rakolacr.azurecr.io/aksdemo 
           imagePullPolicy: Always
           ports:
           - containerPort: 80
