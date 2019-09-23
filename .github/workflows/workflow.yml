@@ -31,7 +31,7 @@ jobs:
         container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
         secret-name: demo-e2e-secret
 
-    - uses: Azure/k8s-deploy@master
+    - uses: Azure/k8s-deploy@v1
       with:
         manifests: |
           manifests/deployment.yml
