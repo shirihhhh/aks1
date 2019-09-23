@@ -23,14 +23,14 @@ jobs:
         cluster-name: desattir-bg
         resource-group: desattir-bg
 
-    - uses: azure/k8s-create-secret@master
+    - uses: azure/k8s-create-secret@v1
       with:
         container-registry-url: demoe2e.azurecr.io
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
         container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
         secret-name: demo-e2e-secret
 
-    - uses: Azure/k8s-deploy@v1
+    - uses: Azure/k8s-deploy@master
       with:
         manifests: |
           manifests/deployment.yml
