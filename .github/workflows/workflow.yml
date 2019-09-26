@@ -1,5 +1,7 @@
 on: [push]
 
+name: Build and deploy to Azure Kubernetes Service (AKS)
+
 jobs:
 
   run:
@@ -8,30 +10,35 @@ jobs:
     steps:
     - uses: actions/checkout@master
 
-    - uses: azure/docker-login@v1
+    - name: Docker login using azure/docker-login@v1 action
+      uses: azure/docker-login@v1
       with:
         login-server: rakolacr.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     
-    - run: |
+    - name: Docker build
+      run: |
         docker build . -t rakolacr.azurecr.io/aksdemo:${{ github.sha }}
         docker push rakolacr.azurecr.io/aksdemo:${{ github.sha }} 
       
-    - uses: azure/aks-set-context@v1
+    - name: Set Context for Azure Kubernetes Cluster using azure/aks-set-context@v1 action
+      uses: azure/aks-set-context@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
         cluster-name: desattir-bg
         resource-group: desattir-bg
 
-    - uses: azure/k8s-create-secret@v1
+    - name: Create secret in Kubernetes Cluster using azure/k8s-create-secret@v1 action
+      uses: azure/k8s-create-secret@v1
       with:
         container-registry-url: rakolacr.azurecr.io
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
         container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
         secret-name: demo-e2e-secret
     
-    - uses: Azure/k8s-deploy@v1
+    - name: Deploy manifests to Kubernetes cluster using Azure/k8s-deploy@v1 action
+      uses: Azure/k8s-deploy@v1
       with:
         manifests: |
           manifests/deployment.yml
@@ -40,4 +47,3 @@ jobs:
           demoe2e.azurecr.io/aksdemo:${{ github.sha }}
         imagepullsecrets: |
           demo-e2e-secret
-   
