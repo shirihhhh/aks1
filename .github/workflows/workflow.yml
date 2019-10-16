@@ -40,8 +40,7 @@ jobs:
     - name: Deploy manifests to Kubernetes cluster using Azure/k8s-deploy@v1 action
       uses: Azure/k8s-deploy@v1
       with:
-        manifests: |
-          manifests/*.yml
+        manifests: 'manifests/*.*'
         images: |
           demoe2e.azurecr.io/aksdemo:${{ github.sha }}
         imagepullsecrets: |
