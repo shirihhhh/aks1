@@ -41,8 +41,7 @@ jobs:
       uses: Azure/k8s-deploy@v1
       with:
         manifests: |
-          manifests/deployment.yml
-          manifests/service.yml
+          manifests/*.yml
         images: |
           demoe2e.azurecr.io/aksdemo:${{ github.sha }}
         imagepullsecrets: |
