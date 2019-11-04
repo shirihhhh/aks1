@@ -13,7 +13,7 @@ jobs:
     - uses: actions/checkout@master
     
     # Connect to Azure Container registry (ACR)
-    - uses: azure/container-actions/docker-login@master
+    - uses: azure/docker-login@v1
       with:
         login-server: demo.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }} 
@@ -25,14 +25,14 @@ jobs:
         docker push demo.azurecr.io/k8sdemo:${{ github.sha }}
     
     # Set the target AKS cluster. 
-    - uses: azure/k8s-actions/aks-set-context@master
+    - uses: azure/aks-set-context@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
         cluster-name: desattir
         resource-group: desattir
     
     # Create imagepullsecret for Azure Container registry (ACR)
-    - uses: azure/k8s-actions/k8s-create-secret@master
+    - uses: azure/k8s-create-secret@v1
       with:
         container-registry-url: demo.azurecr.io
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
@@ -40,7 +40,7 @@ jobs:
         secret-name: demo-k8s-secret
     
     # Deploy app to AKS
-    - uses: azure/k8s-actions/k8s-deploy@master
+    - uses: azure/k8s-deploy@v1
       with:
         manifests: |
           manifests/deployment.yml
@@ -85,7 +85,7 @@ jobs:
     
     ```yaml      
       # Connect to a container registry
-    - uses: azure/container-actions/docker-login@master
+    - uses: azure/docker-login@v1
       with:
         login-server: demo.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }} 
@@ -101,7 +101,7 @@ jobs:
     
     ```yaml
     # Create imagepullsecret
-    - uses: azure/k8s-actions/k8s-create-secret@master
+    - uses: azure/k8s-create-secret@v1
       with:
         container-registry-url: demo.azurecr.io
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
