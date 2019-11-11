@@ -1,17 +1,46 @@
-name: CI
-
 on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+    - uses: actions/checkout@master
+    
+    # Connect to Azure Container registry (ACR)
+    - uses: azure/docker-login@v1
+      with:
+        login-server: atulmakshelm.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }} 
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    
+    # Docker build and push to a Azure Container registry (ACR)
+    - run: |
+        docker build . -t atulmakshelm.azurecr.io/k8sdemo:${{ github.sha }}
+        docker push atulmakshelm.azurecr.io/k8sdemo:${{ github.sha }}
+    
+    # Set the target AKS cluster. 
+    - uses: azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: brendan-demo
+        resource-group: brendan-demo
+    
+    # Create imagepullsecret for Azure Container registry (ACR)
+    - uses: azure/k8s-create-secret@v1
+      with:
+        container-registry-url: atulmakshelm.azurecr.io
+        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        secret-name: demo-k8s-secret
+    
+    # Deploy app to AKS
+    - uses: azure/k8s-deploy@v1
+      with:
+        manifests: |
+          manifests/deployment.yml
+          manifests/service.yml
+        images: |
+          atulmakshelm.azurecr.io/k8sdemo:${{ github.sha }}
+        imagepullsecrets: |
+          demo-k8s-secret
+        namespace: kubecondemo
