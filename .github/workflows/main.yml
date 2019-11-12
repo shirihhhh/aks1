@@ -25,6 +25,9 @@ jobs:
         cluster-name: brendan-demo
         resource-group: brendan-demo
     
+    - run: |
+        kubectl create namespace demo --dry-run -o json | kubectl apply -f -
+    
     # Create imagepullsecret for Azure Container registry (ACR)
     - uses: azure/k8s-create-secret@v1
       with:
@@ -32,7 +35,7 @@ jobs:
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
         container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
         secret-name: demo-k8s-secret
-        namespace: kubecondemo
+        namespace: demo
     
     # Deploy app to AKS
     - uses: azure/k8s-deploy@v1
@@ -44,4 +47,7 @@ jobs:
           atulmakshelm.azurecr.io/k8sdemo:${{ github.sha }}
         imagepullsecrets: |
           demo-k8s-secret
-        namespace: kubecondemo
+        namespace: demo
+
+    - run: |
+        kubectl get services -n demo
