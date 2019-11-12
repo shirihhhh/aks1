@@ -50,4 +50,4 @@ jobs:
         namespace: kubecondemo
 
     - run: |
-        kubectl get services
+        kubectl get services -n kubecondemo
