@@ -43,8 +43,9 @@ jobs:
           ${{ env.REGISTRY_NAME }}-registry-connection
         namespace: ${{ env.NAMESPACE }}
         deployment-strategy: CANARY
-        trafficSplitMethod: pod
+        traffic-split-method: smi
         percentage: 20
+        baseline-and-canary-replicas: 1
 
     - run: |
         kubectl get services -n demo
