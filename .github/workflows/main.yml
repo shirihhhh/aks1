@@ -1,5 +1,12 @@
 on: [push]
 
+env:
+  REGISTRY_NAME: atulmakshelm
+  REGISTRY_USERNAME: my-registry-username
+  CLUSTER_NAME: brendan-demo
+  CLUSTER_RESOURCE_GROUP: brendan-demo
+  NAMESPACE: default
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,14 +16,14 @@ jobs:
     # Connect to Azure Container registry (ACR)
     - uses: azure/docker-login@v1
       with:
-        login-server: atulmakshelm.azurecr.io
+        login-server: $REGISTRY_NAME.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }} 
         password: ${{ secrets.REGISTRY_PASSWORD }}
     
     # Docker build and push to a Azure Container registry (ACR)
     - run: |
-        docker build . -t atulmakshelm.azurecr.io/k8sdemo:${{ github.sha }}
-        docker push atulmakshelm.azurecr.io/k8sdemo:${{ github.sha }}
+        docker build . -t $REGISTRY_NAME.azurecr.io/k8sdemo:${{ github.sha }}
+        docker push $REGISTRY_NAME.azurecr.io/k8sdemo:${{ github.sha }}
     
     # Set the target AKS cluster. 
     - uses: azure/aks-set-context@v1
