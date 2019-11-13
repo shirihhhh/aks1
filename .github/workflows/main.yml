@@ -12,20 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    
-    # Connect to Azure Container registry (ACR)
-    - uses: azure/docker-login@v1
-      with:
-        login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
-        username: ${{ secrets.REGISTRY_USERNAME }} 
-        password: ${{ secrets.REGISTRY_PASSWORD }}
-    
-    # Docker build and push to a Azure Container registry (ACR)
-    - run: |
-        docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/k8sdemo:${{ github.sha }}
-        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/k8sdemo:${{ github.sha }}
-    
-        # Set the target Azure Kubernetes Service (AKS) cluster. 
+
+     # Set the target Azure Kubernetes Service (AKS) cluster. 
     - uses: azure/aks-set-context@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
@@ -52,11 +40,13 @@ jobs:
           manifests/deployment.yml
           manifests/service.yml
         images: |
-          ${{ env.REGISTRY_NAME }}.azurecr.io/k8sdemo:${{ github.sha }}
+          ${{ env.REGISTRY_NAME }}.azurecr.io/k8sdemo:50fefd6c7fba86b9a9dffaf20598c50483592f17
         imagepullsecrets: |
           ${{ env.REGISTRY_NAME }}-registry-connection
         namespace: ${{ env.NAMESPACE }}
-        deployment-strategy: None
+        deployment-strategy: Canary
+        trafficSplitMethod: pod
+        percentage: 20
 
     - run: |
         kubectl get services -n demo
