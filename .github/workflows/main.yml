@@ -5,7 +5,7 @@ env:
   REGISTRY_USERNAME: my-registry-username
   CLUSTER_NAME: brendan-demo
   CLUSTER_RESOURCE_GROUP: brendan-demo
-  NAMESPACE: default
+  NAMESPACE: new-namespace
 
 jobs:
   build:
