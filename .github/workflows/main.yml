@@ -29,11 +29,11 @@ jobs:
     - uses: azure/aks-set-context@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
-        cluster-name: brendan-demo
-        resource-group: brendan-demo
+        cluster-name: $CLUSTER_NAME
+        resource-group: $CLUSTER_RESOURCE_GROUP
     
     - run: |
-        kubectl create namespace demo --dry-run -o json | kubectl apply -f -
+        kubectl create namespace $NAMESPACE --dry-run -o json | kubectl apply -f -
     
     # Create imagepullsecret for Azure Container registry (ACR)
     - uses: azure/k8s-create-secret@v1
