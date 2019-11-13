@@ -44,7 +44,7 @@ jobs:
         imagepullsecrets: |
           ${{ env.REGISTRY_NAME }}-registry-connection
         namespace: ${{ env.NAMESPACE }}
-        deployment-strategy: Canary
+        deployment-strategy: CANARY
         trafficSplitMethod: pod
         percentage: 20
 
