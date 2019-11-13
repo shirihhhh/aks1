@@ -33,7 +33,7 @@ jobs:
         secret-name: ${{ env.REGISTRY_NAME }}-registry-connection
         namespace: ${{ env.NAMESPACE }}
     
-    - uses: azure/k8s-deploy@deploymentstrategy
+    - uses: azure/k8s-deploy@ds
       with:
         manifests: |
           manifests/deployment.yml
