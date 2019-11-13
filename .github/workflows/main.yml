@@ -2,7 +2,6 @@ on: [push]
 
 env:
   REGISTRY_NAME: atulmakshelm
-  REGISTRY_USERNAME: my-registry-username
   CLUSTER_NAME: brendan-demo
   CLUSTER_RESOURCE_GROUP: brendan-demo
   NAMESPACE: new-namespace
