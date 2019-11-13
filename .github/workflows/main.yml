@@ -33,7 +33,6 @@ jobs:
         secret-name: ${{ env.REGISTRY_NAME }}-registry-connection
         namespace: ${{ env.NAMESPACE }}
     
-    # Deploy app to AKS
     - uses: azure/k8s-deploy@deploymentstrategy
       with:
         manifests: |
