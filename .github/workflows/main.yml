@@ -25,24 +25,25 @@ jobs:
         docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/k8sdemo:${{ github.sha }}
         docker push ${{ env.REGISTRY_NAME }}.azurecr.io/k8sdemo:${{ github.sha }}
     
-    # Set the target AKS cluster. 
+        # Set the target Azure Kubernetes Service (AKS) cluster. 
     - uses: azure/aks-set-context@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
-        cluster-name: $CLUSTER_NAME
-        resource-group: $CLUSTER_RESOURCE_GROUP
+        cluster-name: ${{ env.CLUSTER_NAME }}
+        resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
     
+    # Create namespace if doesn't exist
     - run: |
-        kubectl create namespace $NAMESPACE --dry-run -o json | kubectl apply -f -
+        kubectl create namespace ${{ env.NAMESPACE }} --dry-run -o json | kubectl apply -f -
     
     # Create imagepullsecret for Azure Container registry (ACR)
     - uses: azure/k8s-create-secret@v1
       with:
-        container-registry-url: atulmakshelm.azurecr.io
+        container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
         container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-        secret-name: demo-k8s-secret
-        namespace: demo
+        secret-name: ${{ env.REGISTRY_NAME }}-registry-connection
+        namespace: ${{ env.NAMESPACE }}
     
     # Deploy app to AKS
     - uses: azure/k8s-deploy@v1
@@ -51,10 +52,10 @@ jobs:
           manifests/deployment.yml
           manifests/service.yml
         images: |
-          atulmakshelm.azurecr.io/k8sdemo:${{ github.sha }}
+          ${{ env.REGISTRY_NAME }}.azurecr.io/k8sdemo:${{ github.sha }}
         imagepullsecrets: |
-          demo-k8s-secret
-        namespace: demo
+          ${{ env.REGISTRY_NAME }}-registry-connection
+        namespace: ${{ env.NAMESPACE }}
 
     - run: |
         kubectl get services -n demo
