@@ -46,7 +46,7 @@ jobs:
         namespace: ${{ env.NAMESPACE }}
     
     # Deploy app to AKS
-    - uses: azure/k8s-deploy@v1
+    - uses: azure/k8s-deploy@deploymentstrategy
       with:
         manifests: |
           manifests/deployment.yml
@@ -56,6 +56,7 @@ jobs:
         imagepullsecrets: |
           ${{ env.REGISTRY_NAME }}-registry-connection
         namespace: ${{ env.NAMESPACE }}
+        deployment-strategy: None
 
     - run: |
         kubectl get services -n demo
