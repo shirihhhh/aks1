@@ -45,6 +45,7 @@ jobs:
         traffic-split-method: smi
         percentage: 20
         baseline-and-canary-replicas: 2
+        action: promote
 
     - run: |
         kubectl get services -n ${{ env.NAMESPACE }}
