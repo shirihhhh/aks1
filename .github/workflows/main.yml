@@ -44,7 +44,6 @@ jobs:
         percentage: 20
         baseline-and-canary-replicas: 2
         action: promote
-        kubectl-version: latest
 
     - run: |
         kubectl get services -n ${{ env.NAMESPACE }}
