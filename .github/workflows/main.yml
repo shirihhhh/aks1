@@ -5,7 +5,7 @@ env:
   REGISTRY_NAME: atulmakshelm
   CLUSTER_NAME: brendan-demo
   CLUSTER_RESOURCE_GROUP: brendan-demo
-  NAMESPACE: new-namespace
+  NAMESPACE: smi-e2e
 
 jobs:
   build:
@@ -45,7 +45,6 @@ jobs:
         traffic-split-method: smi
         percentage: 20
         baseline-and-canary-replicas: 2
-        action: promote
 
     - run: |
         kubectl get services -n ${{ env.NAMESPACE }}
