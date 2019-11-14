@@ -41,10 +41,7 @@ jobs:
           ${{ env.REGISTRY_NAME }}-registry-connection
         namespace: ${{ env.NAMESPACE }}
         strategy: CANARY
-        traffic-split-method: smi
-        percentage: 20
-        baseline-and-canary-replicas: 2
-        action: promote
+        percentage: 60
 
     - run: |
         kubectl get services -n ${{ env.NAMESPACE }}
