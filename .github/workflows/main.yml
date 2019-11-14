@@ -42,6 +42,7 @@ jobs:
         namespace: ${{ env.NAMESPACE }}
         strategy: CANARY
         percentage: 60
+        action: reject
 
     - run: |
         kubectl get services -n ${{ env.NAMESPACE }}
