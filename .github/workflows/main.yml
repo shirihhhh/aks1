@@ -48,4 +48,4 @@ jobs:
         baseline-and-canary-replicas: 1
 
     - run: |
-        kubectl get services -n demo
+        kubectl get services -n ${{ env.NAMESPACE }}
