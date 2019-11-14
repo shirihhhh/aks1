@@ -41,7 +41,7 @@ jobs:
         imagepullsecrets: |
           ${{ env.REGISTRY_NAME }}-registry-connection
         namespace: ${{ env.NAMESPACE }}
-        deployment-strategy: CANARY
+        strategy: CANARY
         traffic-split-method: smi
         percentage: 20
         baseline-and-canary-replicas: 2
