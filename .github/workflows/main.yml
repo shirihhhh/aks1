@@ -1,6 +1,5 @@
 on: [push]
 
-
 env:
   REGISTRY_NAME: atulmakshelm
   CLUSTER_NAME: brendan-demo
