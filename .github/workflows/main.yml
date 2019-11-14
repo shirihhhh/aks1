@@ -44,7 +44,7 @@ jobs:
         deployment-strategy: CANARY
         traffic-split-method: smi
         percentage: 20
-        baseline-and-canary-replicas: 1
+        baseline-and-canary-replicas: 125
 
     - run: |
         kubectl get services -n ${{ env.NAMESPACE }}
