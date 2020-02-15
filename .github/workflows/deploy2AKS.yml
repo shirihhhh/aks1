@@ -1,0 +1,93 @@
+on: [push] 
+
+ 
+
+jobs: 
+
+  build: 
+
+    runs-on: ubuntu-latest 
+
+    steps: 
+
+    - uses: actions/checkout@master 
+
+     
+
+    # Connect to Azure Container registry (ACR) 
+
+    - uses: azure/docker-login@v1 
+
+      with: 
+
+        login-server: demo.azurecr.io 
+
+        username: ${{ secrets.REGISTRY_USERNAME }}  
+
+        password: ${{ secrets.REGISTRY_PASSWORD }} 
+
+     
+
+    # Docker build and push to a Azure Container registry (ACR) 
+
+    - run: | 
+
+        docker build . -t demo.azurecr.io/k8sdemo:${{ github.sha }} 
+
+        docker push demo.azurecr.io/k8sdemo:${{ github.sha }} 
+
+     
+
+    # Set the target AKS cluster.  
+
+    - uses: azure/aks-set-context@v1 
+
+      with: 
+
+        creds: '${{ secrets.AZURE_CREDENTIALS }}' 
+
+        cluster-name: desattir 
+
+        resource-group: desattir 
+
+     
+
+    # Create imagepullsecret for Azure Container registry (ACR) 
+
+    - uses: azure/k8s-create-secret@v1 
+
+      with: 
+
+        container-registry-url: demo.azurecr.io 
+
+        container-registry-username: ${{ secrets.REGISTRY_USERNAME }} 
+
+        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }} 
+
+        secret-name: demo-k8s-secret 
+
+        namespace: kubecondemo 
+
+     
+
+    # Deploy app to AKS 
+
+    - uses: azure/k8s-deploy@v1 
+
+      with: 
+
+        manifests: | 
+
+          manifests/deployment.yml 
+
+          manifests/service.yml 
+
+        images: | 
+
+          demo.azurecr.io/k8sdemo:${{ github.sha }} 
+
+        imagepullsecrets: | 
+
+          demo-k8s-secret 
+
+          namespace: kubecondemoShiri 
