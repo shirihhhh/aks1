@@ -22,8 +22,8 @@ jobs:
     - uses: azure/aks-set-context@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
-        cluster-name: brendan-demo
-        resource-group: brendan-demo
+        cluster-name: aksdemo
+        resource-group: shirispire
     
     - run: |
         kubectl create namespace demo --dry-run -o json | kubectl apply -f -
