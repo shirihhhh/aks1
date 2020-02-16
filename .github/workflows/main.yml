@@ -75,5 +75,5 @@ jobs:
         images: | 
           demoaksgithub.azurecr.io/k8sdemo:${{ github.sha }} 
         imagepullsecrets: | 
-          demo-k8s-secret 
-          namespace: default 
+          demo-k8s-secret
+          namespace: default
