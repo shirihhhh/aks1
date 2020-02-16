@@ -67,21 +67,17 @@ jobs:
         secret-name: demo-k8s-secret 
 
         namespace: demo 
-
-     
+    - name: write
+      run: pwd
 
     # Deploy app to AKS 
-
     - uses: azure/k8s-deploy@v1 
 
       with: 
 
         manifests: | 
-
-          ../../../manifests/deployment.yml 
-
-          ../../../github/home/manifests/service.yml 
-
+          deployment.yml
+          service.yml 
         images: | 
 
           demoaksgithub.azurecr.io/k8sdemo:${{ github.sha }} 
