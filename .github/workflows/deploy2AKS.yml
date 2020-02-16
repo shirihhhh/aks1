@@ -78,9 +78,9 @@ jobs:
 
         manifests: | 
 
-          manifests/deployment.yml 
+          manifests/deployment.yml
 
-          manifests/service.yml 
+          manifests/service.yml
 
         images: | 
 
