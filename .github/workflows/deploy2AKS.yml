@@ -20,7 +20,7 @@ jobs:
 
       with: 
 
-        login-server: demo.azurecr.io 
+        login-server: demoaksgithub.azurecr.io 
 
         username: ${{ secrets.REGISTRY_USERNAME }}  
 
@@ -32,9 +32,9 @@ jobs:
 
     - run: | 
 
-        docker build . -t demo.azurecr.io/k8sdemo:${{ github.sha }} 
+        docker build . -t demoaksgithub.azurecr.io/k8sdemo:${{ github.sha }} 
 
-        docker push demo.azurecr.io/k8sdemo:${{ github.sha }} 
+        docker push demoaksgithub.azurecr.io/k8sdemo:${{ github.sha }} 
 
      
 
@@ -46,9 +46,9 @@ jobs:
 
         creds: '${{ secrets.AZURE_CREDENTIALS }}' 
 
-        cluster-name: desattir 
+        cluster-name: AKSdemo 
 
-        resource-group: desattir 
+        resource-group: shirispire 
 
      
 
@@ -58,7 +58,7 @@ jobs:
 
       with: 
 
-        container-registry-url: demo.azurecr.io 
+        container-registry-url: demoaksgithub.azurecr.io 
 
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }} 
 
@@ -66,7 +66,7 @@ jobs:
 
         secret-name: demo-k8s-secret 
 
-        namespace: kubecondemo 
+        namespace: demo 
 
      
 
@@ -84,10 +84,10 @@ jobs:
 
         images: | 
 
-          demo.azurecr.io/k8sdemo:${{ github.sha }} 
+          demoaksgithub.azurecr.io/k8sdemo:${{ github.sha }} 
 
         imagepullsecrets: | 
 
           demo-k8s-secret 
 
-          namespace: kubecondemoShiri 
+          namespace: demo 
