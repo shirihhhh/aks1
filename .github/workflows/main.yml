@@ -9,14 +9,14 @@ jobs:
     # Connect to Azure Container registry (ACR)
     - uses: azure/docker-login@v1
       with:
-        login-server: atulmakshelm.azurecr.io
+        login-server: demoaksgithub.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }} 
         password: ${{ secrets.REGISTRY_PASSWORD }}
     
     # Docker build and push to a Azure Container registry (ACR)
     - run: |
-        docker build . -t atulmakshelm.azurecr.io/k8sdemo:${{ github.sha }}
-        docker push atulmakshelm.azurecr.io/k8sdemo:${{ github.sha }}
+        docker build . -t demoaksgithub.azurecr.io/k8sdemo:${{ github.sha }}
+        docker push demoaksgithub.azurecr.io/k8sdemo:${{ github.sha }}
     
     # Set the target AKS cluster. 
     - uses: azure/aks-set-context@v1
@@ -31,7 +31,7 @@ jobs:
     # Create imagepullsecret for Azure Container registry (ACR)
     - uses: azure/k8s-create-secret@v1
       with:
-        container-registry-url: atulmakshelm.azurecr.io
+        container-registry-url: demoaksgithub.azurecr.io
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
         container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
         secret-name: demo-k8s-secret
@@ -44,7 +44,7 @@ jobs:
           manifests/deployment.yml
           manifests/service.yml
         images: |
-          atulmakshelm.azurecr.io/k8sdemo:${{ github.sha }}
+          demoaksgithub.azurecr.io/k8sdemo:${{ github.sha }}
         imagepullsecrets: |
           demo-k8s-secret
         namespace: demo
