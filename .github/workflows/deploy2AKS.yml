@@ -78,9 +78,9 @@ jobs:
 
         manifests: | 
 
-          manifests/deployment.yml
+          ./github/aks1/manifests/deployment.yml 
 
-          manifests/service.yml
+          ./github/aks1/manifests/service.yml 
 
         images: | 
 
