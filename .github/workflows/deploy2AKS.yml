@@ -78,9 +78,9 @@ jobs:
 
         manifests: | 
 
-          ./.github/shirihhhh/aks1/manifests/deployment.yml 
+          /github/home/manifests/deployment.yml 
 
-          ./.github/shirihhhh/aks1/manifests/service.yml 
+          /github/home//manifests/service.yml 
 
         images: | 
 
