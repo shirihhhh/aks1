@@ -76,6 +76,7 @@ jobs:
         manifests: | 
           /home/runner/work/aks1/aks1/manifests/deployment.yml
           /home/runner/work/aks1/aks1/manifests/service.yml 
+
         images: | 
 
           demoaksgithub.azurecr.io/k8sdemo:${{ github.sha }} 
