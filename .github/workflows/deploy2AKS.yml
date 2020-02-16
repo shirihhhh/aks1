@@ -78,9 +78,9 @@ jobs:
 
         manifests: | 
 
-          /github/home/manifests/deployment.yml 
+          ../../../manifests/deployment.yml 
 
-          /github/home/manifests/service.yml 
+          ../../../github/home/manifests/service.yml 
 
         images: | 
 
