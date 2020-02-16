@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: aksdemo 
-          image: atulmakshelm.azurecr.io/k8sdemo 
+          image: demoaksgithub.azurecr.io/k8sdemo 
           imagePullPolicy: Always
           ports:
           - containerPort: 80
