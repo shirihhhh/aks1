@@ -8,8 +8,10 @@ jobs:
 
   build: 
 
-    runs-on: ubuntu-latest 
-
+    runs-on: ${{matrix.os}}
+    strategy:
+     matrix:
+      os: [ununtu-16.04, ubuntu-18.04]
     steps: 
 
     - uses: actions/checkout@master 
